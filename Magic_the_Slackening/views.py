@@ -14,7 +14,6 @@ class RootView(APIView):
     Nothing here but me.
     """
     def get(self, request):
-        print 'wtf this is a get'
         return Response({'root': 'Nothing here but me'})
 
 
@@ -23,9 +22,14 @@ class SlackMagicCardView(APIView):
     Slack webhook interface for returning details of magic card.
     """
     def post(self, request):
+        print request.data
         if 'token' not in request.data:
+            print 'weird'
             raise PermissionDenied
         if request.data['token'] != environ['SLACK_HOOK_TOKEN'] or request.data['token'] != environ['SLACK_SLASH_TOKEN']:
+            print environ['SLACK_HOOK_TOKEN']
+            print environ['SLACK_SLASH_TOKEN']
+            print request.data['token']
             raise PermissionDenied
 
         if 'text' not in request.data:
