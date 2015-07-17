@@ -1,1 +1,1 @@
-web: gunicorn Magic_the_Slackening.wsgi:application --log-file -
+web: gunicorn Magic_the_Slackening.wsgi
