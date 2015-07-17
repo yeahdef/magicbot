@@ -13,7 +13,7 @@ class RootView(APIView):
     """
     Nothing here but me.
     """
-    def get(self):
+    def get(self, request):
         return Response({'root': 'Nothing here but me'})
 
 
