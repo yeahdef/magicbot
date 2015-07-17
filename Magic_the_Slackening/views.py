@@ -27,7 +27,7 @@ class SlackMagicCardView(APIView):
         #     raise PermissionDenied
         # if request.data['token'] != environ['SLACK_TOKEN']:
         #     raise PermissionDenied
-        print 'wtf'
+        print request.data
 
         if 'text' not in request.data:
             raise ParseError
