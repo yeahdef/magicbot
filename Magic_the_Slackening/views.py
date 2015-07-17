@@ -9,6 +9,14 @@ from rest_framework.views import APIView
 gatherer_uri = 'http://gatherer.wizards.com/Handlers/Image.ashx?type=card'
 
 
+class RootView(APIView):
+    """
+    Nothing here but me.
+    """
+    def get(self):
+        return Response({'root': 'Nothing here but me'})
+
+
 class SlackMagicCardView(APIView):
     """
     Slack webhook interface for returning details of magic card.
