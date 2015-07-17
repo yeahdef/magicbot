@@ -14,6 +14,7 @@ class RootView(APIView):
     Nothing here but me.
     """
     def get(self, request):
+        print 'wtf this is a get'
         return Response({'root': 'Nothing here but me'})
 
 
@@ -26,6 +27,7 @@ class SlackMagicCardView(APIView):
         #     raise PermissionDenied
         # if request.data['token'] != environ['SLACK_TOKEN']:
         #     raise PermissionDenied
+        print 'wtf'
 
         if 'text' not in request.data:
             raise ParseError
