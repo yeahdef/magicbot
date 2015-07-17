@@ -23,16 +23,18 @@ class SlackMagicCardView(APIView):
     Slack webhook interface for returning details of magic card.
     """
     def post(self, request):
-        # if 'token' not in request.data:
-        #     raise PermissionDenied
-        # if request.data['token'] != environ['SLACK_TOKEN']:
-        #     raise PermissionDenied
-        print request.data
+        if 'token' not in request.data:
+            raise PermissionDenied
+        if request.data['token'] != environ['SLACK_HOOK_TOKEN'] or request.data['token'] != environ['SLACK_SLASH_TOKEN']:
+            raise PermissionDenied
 
         if 'text' not in request.data:
             raise ParseError
 
-        card_name = request.data['text'][9:].strip(' ')
+        if request.data['text'].startswith('magicbot:'):
+            card_name = request.data['text'][9:].strip(' ')
+        else:
+            card_name = request.data['text'].strip(' ')
         card_img_uri = '{}&name={}'.format(gatherer_uri, urllib.quote_plus(card_name))
 
         return Response({
