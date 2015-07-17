@@ -6,7 +6,13 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 
 
-gatherer_uri = 'http://gatherer.wizards.com/Handlers/Image.ashx?type=card'
+GATHERER_URI = 'http://gatherer.wizards.com/Handlers/Image.ashx?type=card'
+ALIASES = {
+    'bob': 'Dark Confidant',
+    'bear': 'Grizzly Bears',
+    'bears': 'Grizzly Bears',
+    'crow': 'Storm Crow'
+}
 
 
 class RootView(APIView):
@@ -34,7 +40,9 @@ class SlackMagicCardView(APIView):
             card_name = request.data['text'][9:].strip(' ')
         else:
             card_name = request.data['text'].strip(' ')
-        card_img_uri = '{}&name={}'.format(gatherer_uri, urllib.quote_plus(card_name))
+        if card_name.lower() in ALIASES:
+            card_name = ALIASES[card_name.lower()]
+        card_img_uri = '{}&name={}'.format(GATHERER_URI, urllib.quote_plus(card_name))
 
         return Response({
             'text': card_img_uri
