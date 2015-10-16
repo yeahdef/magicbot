@@ -20,7 +20,7 @@ class RootView(APIView):
     Nothing here but me.
     """
     def get(self, request):
-        return Response({'root': 'Nothing here but me'})
+        return Response({'root': 'Psst, go to the /magicslack/ endpoint.'})
 
 
 class SlackMagicCardView(APIView):
@@ -40,6 +40,10 @@ class SlackMagicCardView(APIView):
             card_name = request.data['text'][9:].strip(' ')
         else:
             card_name = request.data['text'].strip(' ')
+
+        # Catch Slack's garbage /u2019
+        card_name = card_name.replace('\xe2\x80\x99', '\'')
+
         if card_name.lower() in ALIASES:
             card_name = ALIASES[card_name.lower()]
         card_img_uri = '{}&name={}'.format(GATHERER_URI, urllib.quote_plus(card_name))
@@ -47,4 +51,3 @@ class SlackMagicCardView(APIView):
         return Response({
             'text': card_img_uri
         })
-
