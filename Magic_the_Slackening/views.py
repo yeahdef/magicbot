@@ -43,7 +43,7 @@ class SlackMagicCardView(APIView):
             card_name = request.data['text'].strip(' ')
 
         # Catch Slack's garbage /u2019
-        card_name = card_name.replace('\xe2\x80\x99', '\'')
+        # card_name = card_name.replace('\xe2\x80\x99', '\'')
 
         if card_name.lower() in ALIASES:
             card_name = ALIASES[card_name.lower()]
