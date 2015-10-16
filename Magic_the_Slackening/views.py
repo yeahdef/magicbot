@@ -37,7 +37,7 @@ class SlackMagicCardView(APIView):
             raise ParseError
 
         if request.data['text'].startswith('magicbot:'):
-            request.data['text']
+            print request.data['text']
             card_name = request.data['text'][9:].strip(' ')
             print type(card_name)
         else:
