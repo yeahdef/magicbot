@@ -44,8 +44,7 @@ class SlackMagicCardView(APIView):
         # Catch Slack's garbage /u2019 in the name of Manor Skeleton
         print card_name
         try:
-            print type(card_name)
-            card_name = card_name.encode('utf-8').replace(u'\u2019', u'\'')
+            card_name = card_name.decode('utf-8').replace(u'\u2019', u'\'')
         except Exception as e:
             print e
         try:
