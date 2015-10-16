@@ -38,13 +38,11 @@ class SlackMagicCardView(APIView):
 
         if request.data['text'].startswith('magicbot:'):
             try:
-                print request.data['text'].encode('utf-8')
+                card_name = request.data['text'].encode('utf-8')[9:].strip(' ')
             except Exception as e:
                 print e
-            card_name = request.data['text'][9:].strip(' ')
-            print type(card_name)
         else:
-            card_name = unicode(request.data['text'].strip(' '), 'utf-8')
+            card_name = request.data['text'].encode('utf-8').strip(' ')
 
         # Catch Slack's garbage /u2019 in the name of Manor Skeleton
         print card_name
