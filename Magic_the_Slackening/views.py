@@ -38,6 +38,7 @@ class SlackMagicCardView(APIView):
 
         if request.data['text'].startswith('magicbot:'):
             card_name = request.data['text'][9:].strip(' ')
+            print card_name
         else:
             card_name = request.data['text'].strip(' ')
 
