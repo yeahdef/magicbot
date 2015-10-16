@@ -38,7 +38,7 @@ class SlackMagicCardView(APIView):
 
         if request.data['text'].startswith('magicbot:'):
             try:
-                print request.data['text']
+                print request.data['text'].encode('utf-8')
             except Exception as e:
                 print e
             card_name = request.data['text'][9:].strip(' ')
