@@ -37,11 +37,15 @@ class SlackMagicCardView(APIView):
             raise ParseError
 
         if request.data['text'].startswith('magicbot:'):
-            card_name = unicode(request.data['text'][9:].strip(' '), 'utf-8')
+            try:
+                card_name = unicode(request.data['text'][9:].strip(' '), 'utf-8')
+            except Exception as e:
+                print e
         else:
             card_name = unicode(request.data['text'].strip(' '), 'utf-8')
 
         # Catch Slack's garbage /u2019 in the name of Manor Skeleton
+        print card_name
         card_name = card_name.replace(u'\u2019', u'\'')
         try:
             card_name = str(card_name)
