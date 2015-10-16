@@ -20,7 +20,7 @@ class RootView(APIView):
     Nothing here but me.
     """
     def get(self, request):
-        return Response({'root': 'Nothing here but me'})
+        return Response({'root': 'Psst, go to the /magicslack/ endpoint.'})
 
 
 class SlackMagicCardView(APIView):
@@ -37,9 +37,17 @@ class SlackMagicCardView(APIView):
             raise ParseError
 
         if request.data['text'].startswith('magicbot:'):
-            card_name = request.data['text'][9:].strip(' ')
+            card_name = request.data['text'].encode('utf-8')[9:].strip(' ')
         else:
-            card_name = request.data['text'].strip(' ')
+            card_name = request.data['text'].encode('utf-8').strip(' ')
+
+        # Catch Slack's garbage /u2019 in the name of Manor Skeleton
+        card_name = card_name.decode('utf-8').replace(u'\u2019', u'\'')
+        try:
+            card_name = str(card_name)
+        except UnicodeDecodeError:
+            card_name = 'manor skeleton'
+
         if card_name.lower() in ALIASES:
             card_name = ALIASES[card_name.lower()]
         card_img_uri = '{}&name={}'.format(GATHERER_URI, urllib.quote_plus(card_name))
@@ -47,4 +55,3 @@ class SlackMagicCardView(APIView):
         return Response({
             'text': card_img_uri
         })
-
