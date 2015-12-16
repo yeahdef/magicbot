@@ -462,8 +462,8 @@ class SlackMagicCardView(APIView):
         command = request.data['text']
         # Get set name first
         set_code = ''
-        if '//' in command:
-            csplit = command.split('//')
+        if '\\\\' in command:
+            csplit = command.split('\\\\')
             set_name = csplit[1].strip(' ').lower()
             set_code = SET_ALIASES.get(set_name, '')
             command = csplit[0]
