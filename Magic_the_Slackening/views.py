@@ -14,8 +14,6 @@ GATHERER_URI = 'http://gatherer.wizards.com/Handlers/Image.ashx?type=card'
 class MagicCardView(APIView):
     """Slack webhook interface for returning details of magic card."""
     def post(self, request):
-        print 'anything?'
-
         if 'token' not in request.data:
             raise PermissionDenied
         if request.data['token'] != environ['SLACK_HOOK_TOKEN']:
