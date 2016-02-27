@@ -1,9 +1,8 @@
 from django.conf.urls import patterns, url
 
-from views import SlackMagicCardView, RootView
+from views import MagicCardView
 
 
-urlpatterns = patterns('',
-    url(r'^$', RootView.as_view()),
-    url(r'^magicslack/', SlackMagicCardView.as_view()),
+urlpatterns = patterns(
+    url(r'^magic-cards/', MagicCardView.as_view()),
 )

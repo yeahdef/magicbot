@@ -1,7 +1,5 @@
-dj-static==0.0.6
-Django==1.8.3
-djangorestframework==3.1.3
-gunicorn==19.3.0
-pystache==0.5.4
-static==1.1.1
-static3==0.6.1
+dj-static
+Django
+djangorestframework
+gunicorn
+pystache
