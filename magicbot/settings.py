@@ -36,9 +36,8 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 )
 
-ROOT_URLCONF = 'Magic_the_Slackening.urls'
-
-WSGI_APPLICATION = 'Magic_the_Slackening.wsgi.application'
+ROOT_URLCONF = 'magicbot.urls'
+WSGI_APPLICATION = 'magicbot.wsgi.application'
 
 
 # Database
