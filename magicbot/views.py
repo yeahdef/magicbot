@@ -10,8 +10,20 @@ from aliases import CARD_ALIASES, SET_ALIASES
 GATHERER_URI = 'http://gatherer.wizards.com/Handlers/Image.ashx?type=card'
 
 
+class WelcomeView(APIView):
+    """This welcome view lets "Deploy to Heroku" users know that their deploy was successful."""
+
+    permission_classes = ()
+
+    def get(self, request):
+        return Response({
+            'text': 'Welcome to the magicbot API. Configure your Slack outgoing webhooks to make use of it!'
+        })
+
+
 class MagicCardView(APIView):
     """Slack webhook interface for returning details of magic card."""
+
     def post(self, request):
         if 'text' not in request.data:
             raise ParseError(detail='No query text was provided.')

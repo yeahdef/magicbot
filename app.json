@@ -1,0 +1,21 @@
+{
+  "name": "magicbot",
+  "description": "Simple REST interface for querying MTG cards from Slack.",
+  "keywords": [
+    "magic the gathering",
+    "entertainment",
+    "cards",
+    "games"
+  ],
+  "repository": "https://github.com/mmedal/magicbot",
+  "success_url": "/",
+  "env": {
+    "SECRET_TOKEN": {
+      "description": "The Django secret key settings.py.",
+      "generator": "secret"
+    },
+    "SLACK_HOOK_TOKEN": {
+      "description": "The Slack webhook token to authenticate with the API.",
+    }
+  }
+}
