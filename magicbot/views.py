@@ -14,10 +14,10 @@ class MagicCardView(APIView):
     """Slack webhook interface for returning details of magic card."""
     def post(self, request):
         if 'text' not in request.data:
-            raise ParseError()
+            raise ParseError(detail='No query text was provided.')
         command = request.data['text']
-        if command[:9] != 'magicbot':
-            raise ParseError()
+        if command[:9] != 'magicbot:':
+            raise ParseError(detail='Text query must begin with "magicbot:".')
 
         # Get set name first
         set_code = ''

@@ -6,5 +6,5 @@ from views import MagicCardView
 
 urlpatterns = [
     url(r'^favicon\.ico$', RedirectView.as_view(url='/static/img/favicon.ico')),
-    url(r'^magic-cards$', MagicCardView.as_view())
+    url(r'^magic-cards$', MagicCardView.as_view(), name='magic-cards')
 ]

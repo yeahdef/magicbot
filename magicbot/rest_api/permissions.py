@@ -13,3 +13,4 @@ class SlackTokenPermission(permissions.BasePermission):
             return False
         if request.data['token'] != environ['SLACK_HOOK_TOKEN']:
             return False
+        return True
