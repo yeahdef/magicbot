@@ -17,5 +17,6 @@
     "SLACK_HOOK_TOKEN": {
       "description": "The Slack webhook token to authenticate with the API."
     }
-  }
+  },
+  "addons": []
 }
