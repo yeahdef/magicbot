@@ -1,4 +1,4 @@
-# Magic_the_Slackening
+# magicbot
 Simple REST interface for querying MTG card images from Slack.
 
 ## Requirements
