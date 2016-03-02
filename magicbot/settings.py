@@ -1,4 +1,4 @@
-"""Django settings for Magic_the_Slackening project."""
+"""Django settings for magicbot project."""
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 import os
 

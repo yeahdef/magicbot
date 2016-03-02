@@ -1,1 +1,1 @@
-web: gunicorn Magic_the_Slackening.wsgi
+web: gunicorn magicbot.wsgi
