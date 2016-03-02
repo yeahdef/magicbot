@@ -1,11 +1,18 @@
 """Django settings for Magic_the_Slackening project."""
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 import os
+
+from django.utils.crypto import get_random_string
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.environ['SECRET_KEY']
+try:
+    SECRET_KEY = os.environ.get('SECRET_KEY')
+except KeyError:
+    os.environ['SECRET_KEY'] = get_random_string(50, 'abcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*(-_=+)')
+    SECRET_KEY = os.environ.get('SECRET_KEY')
+
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
