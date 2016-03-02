@@ -40,6 +40,14 @@ ROOT_URLCONF = 'magicbot.urls'
 WSGI_APPLICATION = 'magicbot.wsgi.application'
 
 
+# Rest Framework configuration
+REST_FRAMEWORK = {
+    'DEFAULT_PERMISSION_CLASSES': (
+        'magicbot.rest_api.permissions.SlackTokenPermission',
+    )
+}
+
+
 # Database
 DATABASES = {}
 

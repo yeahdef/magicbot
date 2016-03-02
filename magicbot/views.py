@@ -1,7 +1,6 @@
-from os import environ
 import urllib
 
-from rest_framework.exceptions import ParseError, PermissionDenied
+from rest_framework.exceptions import ParseError
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
@@ -14,13 +13,11 @@ GATHERER_URI = 'http://gatherer.wizards.com/Handlers/Image.ashx?type=card'
 class MagicCardView(APIView):
     """Slack webhook interface for returning details of magic card."""
     def post(self, request):
-        if 'token' not in request.data:
-            raise PermissionDenied
-        if request.data['token'] != environ['SLACK_HOOK_TOKEN']:
-            raise PermissionDenied
         if 'text' not in request.data:
-            raise ParseError
+            raise ParseError()
         command = request.data['text']
+        if command[:9] != 'magicbot':
+            raise ParseError()
 
         # Get set name first
         set_code = ''
