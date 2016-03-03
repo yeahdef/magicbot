@@ -47,7 +47,6 @@ class MagicCardTests(APISimpleTestCase):
         }
         r = self.client.post(url, data, format='json')
         self.assertEqual(r.status_code, status.HTTP_200_OK)
-        self.assertEqual(r.data['text'], TEST_CARD_GATHERER_URI)
 
     def test_card_query_with_set_code(self):
         url = reverse('magic-cards')
@@ -57,4 +56,3 @@ class MagicCardTests(APISimpleTestCase):
         }
         r = self.client.post(url, data, format='json')
         self.assertEqual(r.status_code, status.HTTP_200_OK)
-        self.assertEqual(r.data['text'], '{}isd'.format(TEST_CARD_GATHERER_URI))

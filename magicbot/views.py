@@ -1,5 +1,8 @@
 import urllib
 
+from bs4 import BeautifulSoup
+import requests
+
 from rest_framework.exceptions import ParseError
 from rest_framework.response import Response
 from rest_framework.views import APIView
@@ -56,6 +59,55 @@ class MagicCardView(APIView):
         card_img_uri = '{}&name={}&set={}'.format(
             GATHERER_URI, urllib.quote_plus(card_name), set_code)
 
+        # Get card price
+        set_code = set_code.upper()
+        headers = {'user-agent': 'Mozilla/5.0 (Windows NT 6.0) Gecko/20100101 Firefox/14.0.1'}
+
+        redirected = False
+        base_uri = 'http://www.mtggoldfish.com'
+        query_uri = '{}/q?query_string={}&set_id={}'.format(base_uri, card_name, set_code)
+        r = requests.get(query_uri, headers=headers)
+        soup = BeautifulSoup(r.text, 'html.parser')
+
+        if card_name in soup.title.string.lower():
+            redirected = True
+
+        price_uri = ''
+        if not redirected:
+            def is_newline(iterable):
+                return iterable != '\n'
+            for result in soup.find_all('tr'):
+                row = filter(is_newline, result.contents)
+                card_parsed = filter(is_newline, row[0].contents)
+                set_parsed = filter(is_newline, row[1].contents)
+
+                if set_code:
+                    if set_code == set_parsed[0]['alt']:
+                        price_uri = '{}{}#paper'.format(base_uri, card_parsed[0]['href'])
+                        break
+                else:
+                    price_uri = '{}{}#paper'.format(base_uri, card_parsed[0]['href'])
+                    break
+
+        if price_uri or redirected:
+            if not redirected:
+                r = requests.get(price_uri, headers=headers)
+                soup = BeautifulSoup(r.text, 'html.parser')
+
+            def is_price_field(tag):
+                if tag.has_attr('class'):
+                    if tag['class'][0] == 'price-box-price':
+                        return True
+                return False
+
+            try:
+                price = 'Current median price: ${}'.format(soup.find_all(is_price_field)[1].string)
+            except:
+                price = 'Current median price: ${}'.format(soup.find_all(is_price_field)[0].string)
+        else:
+            price = 'Current median price: ??'
+
+        print '{} {}'.format(card_img_uri, price)
         return Response({
-            'text':  card_img_uri
+            'text': '{} {}'.format(card_img_uri, price)
         })
