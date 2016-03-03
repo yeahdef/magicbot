@@ -3,3 +3,5 @@ Django
 djangorestframework
 gunicorn
 pystache
+requests
+beautifulsoup4
