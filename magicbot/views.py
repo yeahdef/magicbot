@@ -48,3 +48,5 @@ class MagicCardView(APIView):
                     }
                 ]
             })
+        else:
+            return Response({})
