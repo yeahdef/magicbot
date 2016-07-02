@@ -49,4 +49,4 @@ class MagicCardView(APIView):
                 ]
             })
         else:
-            return Response({})
+            return Response({"text": "Card not found"})
