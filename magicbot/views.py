@@ -42,5 +42,10 @@ class MagicCardView(APIView):
         else:
             response = "Card not found"
         return Response({
-            'text': '{}'.format(response)
+            "response_type": "in_channel",
+            "attachments": [
+                {
+                    "text":response
+                }
+            ]
         })
