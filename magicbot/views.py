@@ -22,14 +22,7 @@ class MagicCardView(APIView):
     """Slack webhook interface for returning details of magic card."""
 
     def post(self, request):
-        if 'text' not in request.data:
-            raise ParseError(detail='No query text was provided.')
-        command = request.data['text']
-        if command[:9] != 'magicbot:':
-            raise ParseError(detail='Text query must begin with "magicbot:".')
-
-        # The 9: strips magicbot from the command
-        card_name = command.encode('utf-8')[9:].strip(' ')
+        card_name = request.data['text'].trim().encode('utf-8')
         # try to derive the card name from a fragment
         cards_json = requests.get('http://gatherer.wizards.com/Handlers/InlineCardSearch.ashx?nameFragment=%s' % card_name).json()
         if len(cards_json['Results']) > 0:
