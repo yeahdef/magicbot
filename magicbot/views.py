@@ -31,8 +31,8 @@ class MagicCardView(APIView):
         if 'text' not in request.data:
             raise ParseError(detail='No query text was provided.')
         command = request.data['text']
-        if command[:5] != 'test:':
-            raise ParseError(detail='Text query must begin with "test:".')
+        if command[:9] != 'magicbot:':
+            raise ParseError(detail='Text query must begin with "magicbot:".')
 
         # Get set name first
         set_code = ''
@@ -43,7 +43,7 @@ class MagicCardView(APIView):
             command = csplit[0]
 
         # The 9: strips magicbot from the command
-        card_name = command.encode('utf-8')[5:].strip(' ')
+        card_name = command.encode('utf-8')[9:].strip(' ')
         # try to derive the card name from a fragment
         cards_json = requests.get('http://gatherer.wizards.com/Handlers/InlineCardSearch.ashx?nameFragment=%s' % card_name).json()
         if len(cards_json['Results']) > 0:
