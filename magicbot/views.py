@@ -22,7 +22,7 @@ class MagicCardView(APIView):
     """Slack webhook interface for returning details of magic card."""
 
     def post(self, request):
-        card_name = request.data['text'].trim().encode('utf-8')
+        card_name = urllib.quote_plus(request.data['text'])
         # try to derive the card name from a fragment
         cards_json = requests.get('http://gatherer.wizards.com/Handlers/InlineCardSearch.ashx?nameFragment=%s' % card_name).json()
         if len(cards_json['Results']) > 0:
