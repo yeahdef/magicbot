@@ -39,13 +39,12 @@ class MagicCardView(APIView):
     
             # Get card image uri
             response = '{}&name={}'.format(GATHERER_URI, urllib.quote_plus(card_name))
-        else:
-            response = "Card not found"
-        return Response({
-            "response_type": "in_channel",
-            "attachments": [
-                {
-                    "text":response
-                }
-            ]
-        })
+            return Response({
+                "response_type": "in_channel",
+                "attachments": [
+                    {
+            			"text": request.data['text'],
+                        "image_url": response,
+                    }
+                ]
+            })
