@@ -44,7 +44,10 @@ class MagicCardView(APIView):
 
         # The 9: strips magicbot from the command
         card_name = command.encode('utf-8')[9:].strip(' ')
-
+        # try to derive the card name from a fragment
+        cards_json = requests.get('http://gatherer.wizards.com/Handlers/InlineCardSearch.ashx?nameFragment=%s' % card_name).json()
+        if len(cards_json['Results']) > 0:
+            card_name = cards_json['Results'][0]['Name']
         # Catch Slack's garbage /u2019 in the name of Manor Skeleton
         try:
             card_name = card_name.decode('utf-8').replace(u'\u2019', u'\'')
